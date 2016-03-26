@@ -6,11 +6,11 @@ I find it particularly useful in workflows that create text files (e.g. html or 
 
 ## What's new here?
 
-You might ask, "doesn't this package duplicate functionality already available in R?  Can't I perform these same tasks using tools like `readLines()`, `gsub()`, `grep()`, etc.?"  The answer is yes.  That being said, the value of the `rsed` package is that it collapses the several steps of code that would be required for stream editing into a call to a single function.
+You might ask, "doesn't this package duplicate functionality already available in R?  Can't I perform these same tasks using base R functions like [readLines()](http://www.inside-r.org/r-doc/base/readLines), [gsub()](http://www.inside-r.org/r-doc/base/gsub), [grep()](http://www.inside-r.org/r-doc/base/grep), etc.?"  The answer is yes.  That being said, the value of the `rsed` package is that it collapses the several steps of code that would be required for stream editing into a call to a single function.
 
 ## Package installation
 
-Package installation is made easy with `devtools`:
+Package installation is made easy with [devtools](https://cran.r-project.org/web/packages/devtools/index.html):
 ```{r instal, eval = FALSE, echo = TRUE}
 # If devtools is not already installed
 install.packages("devtools") 
@@ -197,7 +197,7 @@ The online documentation of the `rsed` package is produced by [packagedocs](http
 
     printstream(x, ...)
 
-A quick fix to this problem was to add the following to the end of the documentation [build script](https://github.com/pnnl/docs-rsed/blob/gh-pages/build.R):
+A quick fix to this problem was to essentially add the following to the end of the documentation [build script](https://github.com/pnnl/docs-rsed/blob/gh-pages/build.R):
 
     streamEdit(list(s = list(pattern = "printstream(", 
                              replacement = "print(", 

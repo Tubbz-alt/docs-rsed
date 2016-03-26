@@ -99,11 +99,11 @@
 <p>I find it particularly useful in workflows that create text files (e.g. html or othwerwise) that need to be tweaked a little before they can be used. For example, I use <code>rsed</code> when files of interest are produced by other packages, and I don’t want to delve into the (complicated) source code in order to produce a slightly different result in the output text files. In this vignette I’ll take you through a simple tour of the capability of the <code>rsed</code> package. Additional details can be found in the standard package help files, which you can find by following the blue links.</p>
 <div id="whats-new-here" class="section level2">
 <h2>What’s new here?</h2>
-<p>You might ask, “doesn’t this package duplicate functionality already available in R? Can’t I perform these same tasks using tools like <code>readLines()</code>, <code>gsub()</code>, <code>grep()</code>, etc.?” The answer is yes. That being said, the value of the <code>rsed</code> package is that it collapses the several steps of code that would be required for stream editing into a call to a single function.</p>
+<p>You might ask, “doesn’t this package duplicate functionality already available in R? Can’t I perform these same tasks using base R functions like <a href="http://www.inside-r.org/r-doc/base/readLines">readLines()</a>, <a href="http://www.inside-r.org/r-doc/base/gsub">gsub()</a>, <a href="http://www.inside-r.org/r-doc/base/grep">grep()</a>, etc.?” The answer is yes. That being said, the value of the <code>rsed</code> package is that it collapses the several steps of code that would be required for stream editing into a call to a single function.</p>
 </div>
 <div id="package-installation" class="section level2">
 <h2>Package installation</h2>
-<p>Package installation is made easy with <code>devtools</code>:</p>
+<p>Package installation is made easy with <a href="https://cran.r-project.org/web/packages/devtools/index.html">devtools</a>:</p>
 <pre class="r"><code># If devtools is not already installed
 install.packages(&quot;devtools&quot;) 
 
