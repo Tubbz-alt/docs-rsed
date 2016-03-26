@@ -20,13 +20,16 @@ packagedocs::render_docs(
   rd_index = "./rd_index.yaml" # optional path to rd layout yaml
 )
 
-# Make this small correction
+# Ensure the 'rsed' package is loaded
 if(!require("rsed")) {
   devtools::install_github("pnnl/rsed")
 }
 
-# Make a manual edit to one of the links that doesn't seem to render correctly
+# Make some manual edits to rd.html that didn't render correctly
 rsed::streamEdit(list(s = list(pattern = "printstream(",
                                replacement = "print(",
+                               fixed = TRUE),
+                      r = list(at = "<strong>Authors:</strong> (none)",
+                               replacement = "<strong>Author:</strong> Landon Sego",
                                fixed = TRUE)),
                  inFile = "rd.html", outFile = "rd.html")
