@@ -1,0 +1,207 @@
+# Introduction
+
+The `rsed` package contains tools for stream editing:  manipulating text files by making insertions, replacements, deletions, substitutions, or commenting. It hails from the powerful Unix command, `sed`.  See, for example, the [GNU documentation for `sed`](https://www.gnu.org/software/sed/manual/sed.html).  While this package is not nearly as powerful as `sed`, it is much simpler to use.  
+
+I find it particularly useful in workflows that create text files (e.g. html or othwerwise) that need to be tweaked a little before they can be used. For example, I use `rsed` when files of interest are produced by other packages, and I don't want to delve into the (complicated) source code in order to produce a slightly different result in the output text files.  In this vignette I'll take you through a simple tour of the capability of the `rsed` package.  Additional details can be found in the standard package help files, which you can find by following the blue links.
+
+## What's new here?
+
+You might ask, "doesn't this package duplicate functionality already available in R?  Can't I perform these same tasks using tools like `readLines()`, `gsub()`, `grep()`, etc.?"  The answer is yes.  That being said, the value of the `rsed` package is that it collapses the several steps of code that would be required for stream editing into a call to a single function.
+
+## Package installation
+
+Package installation is made easy with `devtools`:
+```{r instal, eval = FALSE, echo = TRUE}
+# If devtools is not already installed
+install.packages("devtools") 
+
+devtools::install_github("pnnl/rsed")
+```
+Now load the package as usual:
+```{r loadpackage, eval = TRUE, echo = TRUE}
+library(rsed)
+```
+## What's a stream?
+
+For our purposes, a *stream* is simply a character vector. The mental model is that each element of the vector corresponds to a line in a file.
+While this vignette and the package documentation typically discuss stream editing in terms of manipulating files stored on disk, reads and writes to disk are not required.  The functions in `rsed` will operate on any stream (i.e. any character vector).  
+
+Here's an example of a stream, from *To a Skylark*, by Percy Bysshe Shelley:
+
+```{r stream, eval = TRUE, echo = TRUE}
+skylark <- c("Higher still and higher",
+             "From the earth thou springest",
+             "Like a cloud of fire;",
+             "The blue deep thou wingest,",
+             "And singing still dost soar, and soaring ever singest.")
+
+# To view it as a stream:
+as.stream(skylark)
+```
+All of the functions in `rsed` operate on and return character vectors like `skylark`.
+
+# Stream editing functions
+
+`rsed` can perform five types of editing:
+
+- Insertion of new lines at any point in the file
+- Replacement of entire lines
+- Deletion of entire lines
+- Substituting one string for another
+- Comment out a line using the syntax of any programming language
+
+We'll look at each in turn.  To avoid marring Shelley's lovely verse, let's create something we'd like to edit and write it to a file:
+
+```{r stream1, eval = TRUE, echo = TRUE}
+cat("Add something after this line\n",
+    "Replace this line\n",
+    "Delete this line\n",
+    "Substitute 'this' for 'that'\n",
+    "Comment this line\n",
+    file = "stream.txt", sep = "")
+```
+The file `stream.txt` looks like this:
+```{r showStream, eval = TRUE, echo = FALSE}
+cat("Add something after this line",
+    "\nReplace this line",
+    "\nDelete this line",
+    "\nSubstitute 'this' for 'that'",
+    "\nComment this line")
+```
+To illustrate how processing this stream would work if it began as a file, we would need to read the file and produce a *stream* using `readLines()`, such that each line of the file is an element in a character vector:
+
+```{r stream2, eval = TRUE, echo = TRUE}
+s <- as.stream(readLines("stream.txt"))
+```
+
+Now we can operate on the stream `s`.
+
+## Insertion
+Inserting new lines is accomplished by `r rdl("sed_insert()")`.  So, for easy comparison, here's the original stream, `s`:
+```{r orig1, eval = TRUE, echo = FALSE}
+s
+```
+And here's what we get after the insertion:
+```{r insert, eval = TRUE, echo = TRUE}
+sed_insert(s, "Add something after this line", "Here's the addition")
+```
+## Replacement
+Replacing an entire line is accomplished by `r rdl("sed_replace()")`. Again for easy comparison, here's the original stream, `s`:
+```{r orig2, eval = TRUE, echo = FALSE}
+s
+```
+And after the replacement:
+```{r replace, eval = TRUE, echo = TRUE}
+sed_replace(s, "Replace this", "A replacement")
+```
+
+## Deletion
+Deleting an entire line is also accomplished by `r rdl("sed_replace()")`.  The original stream, `s`:
+```{r orig3, eval = TRUE, echo = FALSE}
+s
+```
+and after the deletion:
+```{r delete, eval = TRUE, echo = TRUE}
+sed_replace(s, "Delete this", NULL)
+```
+
+## Substitution
+Substitution is searching for a string and replacing it with another.  We can do this with `r rdl("sed_substitute()")`.  The original stream `s`:
+```{r orig4, eval = TRUE, echo = FALSE}
+s
+```
+After substitution:
+```{r substitute, eval = TRUE, echo = TRUE}
+sed_substitute(s, "'that'", "'this'")
+```
+
+## Commenting
+We can use `r rdl("sed_comment()")` to add or remove comment characters from a number of languages to one or more selected lines. The supported languages are R, C, Java, html, tex, and SAS.  However, any commenting characters can be provided.  The original stream, `s`:
+```{r orig5, eval = TRUE, echo = FALSE}
+s
+```
+And after commenting the last line:
+```{r comment, eval = TRUE, echo = TRUE}
+sed_comment(s, "Comment", type = "html")
+```
+
+# Hi-level wrapper
+
+All the edits shown in the previous section could be accomplished using the following steps:
+```{r manual, eval = TRUE, echo = TRUE}
+s <- readLines("stream.txt")
+s <- sed_insert(s, after = "Add something", insertion = "Here's the addition")
+s <- sed_replace(s, at = 3, replacement = "A replacement")
+s <- sed_replace(s, at = 4, replacement = NULL)
+s <- sed_substitute(s, pattern = "'that'", replacement = "'this'")
+s <- sed_comment(s, at = "Comment", type = "html")
+writeLines(s, con = "newStream1.txt")
+```
+Alternatively, we could use the hi-level function, `r rdl("streamEdit()")`, to execute all of these steps with a single function call:
+```{r streamEdit, eval = TRUE, echo = TRUE}
+streamEdit(list(i = list(after = "Add something", insertion = "Here's the addition"),
+                r = list(at = 3, replacement = "A replacement"),
+                r = list(at = 4, replacement = NULL),
+                s = list(pattern = "'that'", replacement = "'this'"),
+                c = list(at = "Comment", type = "html")),
+            inFile = "stream.txt", 
+            outFile = "newStream2.txt")
+```
+So here's the original:
+```{r orig6, eval = TRUE, echo = TRUE}
+as.stream(readLines("stream.txt"))
+```
+And here are the changes:
+```{r big, eval = TRUE, echo = TRUE}
+as.stream(readLines("newStream2.txt"))
+```
+And for good measure, let's compare the results of these two approaches:
+```{r compare, eval = TRUE, echo = TRUE}
+# The result from calling each function individually
+s1 <- readLines("newStream1.txt")
+
+# The result from the single call to streamEdit()
+s2 <- readLines("newStream2.txt")
+
+identical(s1, s2)
+```
+
+# The 'stream' class and 'print' method
+
+`r rdl("as.stream()")` converts a character vector to a `stream` object by adding `stream` to it's class:
+```{r streamClass, eval = TRUE, echo = TRUE}
+s <- readLines("stream.txt")
+class(s)
+class(as.stream(s))
+```
+The only method for the `stream` class is `print`, which makes reading the stream easier. Consider printing without the `stream` class:
+```{r print1, eval = TRUE, echo = TRUE}
+print(s)
+```
+versus printing an object with the `stream` class:
+```{r print2, eval = TRUE, echo = TRUE}
+print(as.stream(s))
+```
+Note that character vectors do not need to be converted to streams via `r rdl("as.stream()")` before passing them to the stream editing functions.  Either way works:
+```{r compare2, eval = TRUE, echo = TRUE}
+sed_comment(s, 5, type = "R")
+sed_comment(as.stream(s), 5, type = "R")
+```
+
+```{r unlink, eval = TRUE, echo = FALSE}
+unlink(c("stream.txt", "newStream1.txt", "newStream2.txt"))
+```
+
+# A relevant example
+The online documentation of the `rsed` package is produced by [packagedocs](https://github.com/hafen/packagedocs) (thank you Ryan Hafen!).  For some reason however, on the `r rdl("as.stream()")` help page, the usage for the `print` method is incorrectly rendered like this:
+
+    printstream(x, ...)
+
+A quick fix to this problem was to add the following to the end of the documentation [build script](https://github.com/pnnl/docs-rsed/blob/gh-pages/build.R):
+
+    streamEdit(list(s = list(pattern = "printstream(", 
+                             replacement = "print(", 
+                             fixed = TRUE)),
+               inFile = "rd.html", outFile = "rd.html")
+
+
