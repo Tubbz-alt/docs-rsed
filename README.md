@@ -1,7 +1,8 @@
 docs-rsed
 ===========
 
-Tutorial and package reference for rsed.
+This repository contains the [tutorial and package reference](https://pnnl.github.io/docs-rsed) for 
+the [rsed](https://github.com/pnnl/rsed) package.
 
 ## How to contribute
 

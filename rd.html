@@ -60,7 +60,7 @@
           <span class="icon-bar"></span>
         </button>
                 <span class="navbar-brand">
-<a href="http://pnnl.github.io"> <img src='figures/icon.png' alt='tessera icon' width='30px' height='30px' style='margin-top: -3px;'> </a>
+<a href="http://pnnl.github.io"> <img src='figures/icon.png' alt='PNNL icon' width='30px' height='30px' style='margin-top: -3px;'> </a>
         </span>
                 <a href="index.html" class="navbar-brand page-scroll">
         rsed - Package Reference
@@ -107,10 +107,10 @@
       
 <div id="content-top"></div>
 <h1>
-Stream editing in R
+Stream Editing in R
 </h1>
 <p>
-<strong>Authors:</strong> Landon Sego
+<strong>Authors:</strong> (none)
 </p>
 <p>
 <strong>Version:</strong> 0.1.0
@@ -122,7 +122,7 @@ Stream editing in R
 Description
 </h4>
 <p>
-Tools for stream editing: manipulating text files with insertions, replacements, deletions, substitutions, and commenting
+Tools for stream editing: manipulating text files with insertions, replacements, deletions, substitutions, and commenting.
 </p>
 <h4>
 Depends
@@ -467,6 +467,12 @@ type
 A character string uniquely indicating the programming language: R, C, Java, html, tex, and SAS. Customized commenting can be achieved by providing a character vector of length 2, where <code>type[1]</code> designates the beginning comment character and <code>type[2]</code> designates the ending comment character.
 </dd>
 <dt>
+warn
+</dt>
+<dd class="rd-dd">
+If <code>TRUE</code>, warning messages are produced if commenting (or uncommenting) fails due to mispecifification of <code>at</code>.
+</dd>
+<dt>
 …
 </dt>
 <dd class="rd-dd">
@@ -491,7 +497,7 @@ The new <code>stream</code> with the commented (or uncommented) lines. If the co
 Examples
 </h4>
 <pre class="r"><code>######################################################################
-# Let's creaple stream to demonstrate the commenting symbol in each
+# Let's create a stream to demonstrate the commenting symbol in each
 # language
 ######################################################################
 demoStream <- c("An R comment",
@@ -512,9 +518,9 @@ a <- sed_comment(a, "custom", type = c("&", ";"))
 as.stream(demoStream)
 a
 
-################################################################################
+######################################################################
 # Various examples
-################################################################################
+######################################################################
 aStream <- c("Here's a line to comment",
             "# A line to uncomment",
             "  <!-- Another commented line --> ",
