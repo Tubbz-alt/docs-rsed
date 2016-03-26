@@ -1,0 +1,18 @@
+-
+  section_name: Stream editing functions
+  description:
+  topics:
+    - sed_insert
+    - sed_replace
+    - sed_substitute
+    - sed_comment
+-
+  section_name: Hi-level wrapper
+  description:
+  topics:
+    - streamEdit
+-
+  section_name: The 'stream' class and print method
+  description:
+  topics:
+    - as.stream

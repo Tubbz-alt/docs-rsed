@@ -1,0 +1,795 @@
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc" />
+
+    <meta name="author" content="Landon Sego" />
+  
+  
+  <title>rsed</title>
+
+    <script src="assets/jquery-1.11.0/jquery.min.js"></script>
+  <link href="assets/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="assets/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+  <script src="assets/bootstrap-3.3.2/shim/html5shiv.min.js"></script>
+  <script src="assets/bootstrap-3.3.2/shim/respond.min.js"></script>
+  <link href="assets/highlight-8.4/tomorrow.css" rel="stylesheet" />
+  <script src="assets/highlight-8.4/highlight.pack.js"></script>
+  <link href="assets/fontawesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+  <script src="assets/stickykit-1.1.1/sticky-kit.min.js"></script>
+  <script src="assets/jqueryeasing-1.3/jquery.easing.min.js"></script>
+  <link href="assets/packagedocs-0.0.1/pd.css" rel="stylesheet" />
+  <script src="assets/packagedocs-0.0.1/pd.js"></script>
+  <script src="assets/packagedocs-0.0.1/pd-collapse-toc.js"></script>
+  
+  
+  
+    <style type="text/css">
+  .section h1 {
+    margin-top: 50px;
+    margin-bottom: 70px;
+    text-align: center;
+    border-bottom: 0px;
+    font-size: 35px;
+    font-weight: 400;
+    font-family: "PT Mono","Georgia",Arial,sans-serif;
+  }
+
+  .section h2 {
+    margin-left: -10px !important;
+    border-bottom: 3px solid #5d9fea;
+  }
+
+  </style>
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+
+<body>
+
+  
+  <header class="navbar navbar-white navbar-fixed-top" role="banner" id="header">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+                <span class="navbar-brand">
+<a href="http://pnnl.github.io"> <img src='figures/icon.png' alt='tessera icon' width='30px' height='30px' style='margin-top: -3px;'> </a>
+        </span>
+                <a href="index.html" class="navbar-brand page-scroll">
+        rsed - Package Reference
+        </a>
+      </div>
+            <nav class="collapse navbar-collapse" role="navigation">
+        <ul class="nav nav-pills pull-right">
+<li>
+<a href='index.html'>Docs</a>
+</li>
+<li class="active">
+<a href='rd.html'>Package Ref</a>
+</li>
+<li>
+<a href='https://github.com/pnnl/rsed'>Github <i class='fa fa-github'></i></a>
+</li>
+        </ul>
+      </nav>
+          </div>
+  </header>
+
+  <!-- Begin Body -->
+  <div class="container">
+    <div class="row">
+            <div class="col-md-3" id="sidebar-col">
+        <div id="toc">
+          <ul>
+          <li><a href="#stream-editing-functions">Stream editing functions</a><ul>
+          <li><a href="#sed_insert">sed_insert</a></li>
+          <li><a href="#sed_replace">sed_replace</a></li>
+          <li><a href="#sed_substitute">sed_substitute</a></li>
+          <li><a href="#sed_comment">sed_comment</a></li>
+          </ul></li>
+          <li><a href="#hi-level-wrapper">Hi-level wrapper</a><ul>
+          <li><a href="#streamedit">streamEdit</a></li>
+          </ul></li>
+          <li><a href="#the-stream-class-and-print-method">The ‘stream’ class and print method</a><ul>
+          <li><a href="#as.stream">as.stream</a></li>
+          </ul></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9" id="content-col">
+      
+<div id="content-top"></div>
+<h1>
+Stream editing in R
+</h1>
+<p>
+<strong>Authors:</strong> Landon Sego
+</p>
+<p>
+<strong>Version:</strong> 0.1.0
+</p>
+<p>
+<strong>License:</strong> file LICENSE
+</p>
+<h4>
+Description
+</h4>
+<p>
+Tools for stream editing: manipulating text files with insertions, replacements, deletions, substitutions, and commenting
+</p>
+<h4>
+Depends
+</h4>
+<p>
+(none)
+</p>
+<h4>
+Imports
+</h4>
+<p>
+(none)
+</p>
+<h4>
+Suggests
+</h4>
+<p>
+testthat
+</p>
+<h4>
+Enhances
+</h4>
+<p>
+(none)
+</p>
+<div id="stream-editing-functions" class="section level1">
+<h1>Stream editing functions</h1>
+<div id="sed_insert" class="section level2">
+<h2>sed_insert</h2>
+<h3>
+Insert one or more lines
+</h3>
+<h4>
+Usage
+</h4>
+<pre class="r"><code>sed_insert(stream, after, insertion, warn = FALSE, ...)</code></pre>
+<h4>
+Arguments
+</h4>
+<dl class="rd-dl">
+<dt>
+stream
+</dt>
+<dd class="rd-dd">
+A character vector, each element typically (but not necessarily) containing the text from a single line in a file, which can be generated via <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code>.
+</dd>
+<dt>
+after
+</dt>
+<dd class="rd-dd">
+An integer or character string that designates where <code>insertion</code> is added to <code>stream</code>. If <code>after</code> is numeric, it designates the line (or element) number in <code>stream</code> after which the <code>insertion</code> will be placed. The numeric value of <code>after</code> must be in <code>[0:length(stream)]</code>. To make an insertion at the very beginning of <code>stream</code>, use <code>after = 0</code>. If <code>after</code> is a character string, the insertion is placed after the first element in <code>stream</code> that contains the string, where matching is obtained using <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code>.
+</dd>
+<dt>
+insertion
+</dt>
+<dd class="rd-dd">
+A character vector that will be inserted into the stream after element <code>after</code>. Each element in the vector could correspond to a separate line in the file.
+</dd>
+<dt>
+warn
+</dt>
+<dd class="rd-dd">
+If <code>TRUE</code>, warning messages are produced if insertion fails due to mispecifification of <code>after</code>.
+</dd>
+<dt>
+…
+</dt>
+<dd class="rd-dd">
+Additional named arguments to <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code>, which are applicable if <code>after</code> is a character string. In other words, <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code> is used to search for the first instance of <code>after</code>.
+</dd>
+</dl>
+<h4>
+Details
+</h4>
+<p class="rd-p">
+<code>sed_insert</code> only accomodates a single insertion point. Multiple lines may be inserted, but only one insertion point is allowed, which is why <code>length(insertion)</code> must be 1. To make insertions at multiple locations, <code>sed_insert</code> can be called repeatedly on the same string as needed.
+</p>
+<h4>
+Value
+</h4>
+<p class="rd-p">
+<dl>
+The new <code>stream</code> with the insertions added. If the insertion fails because <code>after</code> is specified incorrectly, <code>stream</code> is returned unchanged.
+</dl>
+</p>
+<h4>
+Examples
+</h4>
+<pre class="r"><code>################################################################################
+# Let's create an example stream we can edit
+################################################################################
+stream <- c("Here's a line",
+           "And another line",
+           "Line after which we'll insert a string",
+           "A line after which we'll insert another string",
+           "A final line")
+as.stream(stream)
+
+# Insert a string using line numbers
+stream <- sed_insert(stream, after = 3, "Here's the first insertion")
+stream
+
+# Insert a stream by searching for a string
+stream <- sed_insert(stream,
+                    c("Here's the second insertion",
+                      "",
+                      "Another line of the second insertion after the blank line"),
+                    after = "insert another")
+stream</code></pre>
+<h4>
+See also
+</h4>
+<p><code><a href=#sed_replace>sed_replace</a></code>, <code><a href=#sed_substitute>sed_substitute</a></code>, <code><a href=#sed_comment>sed_comment</a></code>, <code><a href=#streamedit>streamEdit</a></code></p>
+<h4>
+Author
+</h4>
+<p>Landon Sego</p>
+</div>
+<div id="sed_replace" class="section level2">
+<h2>sed_replace</h2>
+<h3>
+Delete or replace an entire line
+</h3>
+<h4>
+Usage
+</h4>
+<pre class="r"><code>sed_replace(stream, at, replacement, warn = FALSE, ...)</code></pre>
+<h4>
+Arguments
+</h4>
+<dl class="rd-dl">
+<dt>
+stream
+</dt>
+<dd class="rd-dd">
+A character vector, each element typically (but not necessarily) containing the text from a single line in a file, which can be generated via <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code>.
+</dd>
+<dt>
+at
+</dt>
+<dd class="rd-dd">
+A vector of integers or a character string that designates where <code>replacement</code> is placed in <code>stream</code>. If <code>at</code> is numeric, it designates the lines (or elements) in <code>stream</code> that will be replaced with <code>replacement</code>. The numeric value(s) of <code>at</code> must be in <code>[1:length(stream)]</code>. If <code>at</code> is a character string, the lines in <code>stream</code> that contain the string <code>at</code> are replaced with <code>replacement</code>.
+</dd>
+<dt>
+replacement
+</dt>
+<dd class="rd-dd">
+A character string of length 1 (vectors not supported), that will be inserted to replace the entire line. Or, if <code>replacement = NULL</code>, the entire line is deleted.
+</dd>
+<dt>
+warn
+</dt>
+<dd class="rd-dd">
+If <code>TRUE</code>, warning messages are produced if replacement fails due to mispecifification of <code>at</code>.
+</dd>
+<dt>
+…
+</dt>
+<dd class="rd-dd">
+Additional named arguments to <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code>, which are applicable if <code>at</code> is a character string. In other words, <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code> is used to search for the instances of <code>at</code>.
+</dd>
+</dl>
+<h4>
+Value
+</h4>
+<p class="rd-p">
+<dl>
+The new <code>stream</code> with the replacements. If the replacement fails because <code>after</code> is specified incorrectly, <code>stream</code> is returned unchanged.
+</dl>
+</p>
+<h4>
+Examples
+</h4>
+<pre class="r"><code>################################################################################
+# Let's create an example stream we can edit
+################################################################################
+stream <- c("Here's a line",
+           "Here's a line we'll delete",
+           "Filler line",
+           "A line we'll delete",
+           "A line we'll entirely replace",
+           "The last line")
+as.stream(stream)
+
+# Here's a deletion of lines 1 and 2 using line numbers
+stream <- sed_replace(stream, 1:2, NULL)
+stream
+
+# Here's a line deletion using a search string
+stream <- sed_replace(stream, "A line we'll delete", NULL)
+stream
+
+# A line replacement using line numbers
+stream <- sed_replace(stream, 2, "A new filler line")
+stream
+
+# Here's a line replacement with a search string
+stream <- sed_replace(stream, "entirely", "A replacement for the line")
+stream
+
+# And we can replace multiple lines too
+stream <- sed_replace(stream, "line", "All the same")
+stream</code></pre>
+<h4>
+See also
+</h4>
+<p><code><a href=#sed_insert>sed_insert</a></code>, <code><a href=#sed_substitute>sed_substitute</a></code>, <code><a href=#sed_comment>sed_comment</a></code>, <code><a href=#streamedit>streamEdit</a></code></p>
+<h4>
+Author
+</h4>
+<p>Landon Sego</p>
+</div>
+<div id="sed_substitute" class="section level2">
+<h2>sed_substitute</h2>
+<h3>
+Substitute one string for another
+</h3>
+<h4>
+Usage
+</h4>
+<pre class="r"><code>sed_substitute(stream, pattern, replacement, every = TRUE, warn = FALSE,
+  ...)</code></pre>
+<h4>
+Arguments
+</h4>
+<dl class="rd-dl">
+<dt>
+stream
+</dt>
+<dd class="rd-dd">
+A character vector, each element typically (but not necessarily) containing the text from a single line in a file, which can be generated via <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code>.
+</dd>
+<dt>
+pattern
+</dt>
+<dd class="rd-dd">
+A character string containing the regular expression that will be used to identify which the elements (or lines) in <code>stream</code> that will be substituted using <code>sed_substitute</code>.
+</dd>
+<dt>
+replacement
+</dt>
+<dd class="rd-dd">
+A character string of length 1 (vectors not supported), that will be substituted for the <code>pattern</code>. Setting <code>replacement = “”</code> will remove the characters matched to <code>pattern</code>.
+</dd>
+<dt>
+every
+</dt>
+<dd class="rd-dd">
+A logical indicating whether every instance of <code>pattern</code> in each line should be substituted with <code>replacement</code>, in which case <code><a href=http://www.inside-r.org/r-doc/base/grep>gsub</a></code> is used. If <code>every = FALSE</code>, only the first instance of <code>pattern</code> in each line is substituted, in which case <code><a href=http://www.inside-r.org/r-doc/base/grep>sub</a></code> is used.
+</dd>
+<dt>
+warn
+</dt>
+<dd class="rd-dd">
+If <code>TRUE</code>, warning messages are produced if substitution fails due to mispecifification of <code>pattern</code>.
+</dd>
+<dt>
+…
+</dt>
+<dd class="rd-dd">
+Additional named arguments to <code><a href=http://www.inside-r.org/r-doc/base/grep>grepl</a></code> and <code><a href=http://www.inside-r.org/r-doc/base/grep>gsub</a></code> or <code><a href=http://www.inside-r.org/r-doc/base/grep>sub</a></code>. <code><a href=http://www.inside-r.org/r-doc/base/grep>grepl</a></code> is used to verify whether <code>pattern</code> is present in <code>stream</code>. <code><a href=http://www.inside-r.org/r-doc/base/grep>gsub</a></code> or <code><a href=http://www.inside-r.org/r-doc/base/grep>sub</a></code> are used to perform the substitution, depending on the value of <code>every</code>.
+</dd>
+</dl>
+<h4>
+Value
+</h4>
+<p class="rd-p">
+<dl>
+The new <code>stream</code> with the substitions. If the substitution fails because <code>pattern</code> is not found, <code>stream</code> is returned unchanged.
+</dl>
+</p>
+<h4>
+Examples
+</h4>
+<pre class="r"><code>################################################################################
+# Let's create an example stream we can edit
+################################################################################
+stream <- c("Here's a line",
+           "A line where we'll make a substitution",
+           "A line where we'll delete 'this'",
+           "Several nonsense nonsense repeated strings nonsense",
+           "Another nonsense line with nonsense repeated strings",
+           "The last line")
+as.stream(stream)
+
+# Here's a deletion within the line
+stream <- sed_substitute(stream, " 'this'", "")
+stream
+
+# Here's a substitution of text
+stream <- sed_substitute(stream, "substitution", "correction")
+stream
+
+# Show the difference between 'every = TRUE' and 'every = FALSE'
+sed_substitute(stream, " nonsense", "", every = TRUE)
+sed_substitute(stream, " nonsense", "", every = FALSE)</code></pre>
+<h4>
+See also
+</h4>
+<p><code><a href=#sed_insert>sed_insert</a></code>, <code><a href=#sed_replace>sed_replace</a></code>, <code><a href=#sed_comment>sed_comment</a></code>, <code><a href=#streamedit>streamEdit</a></code></p>
+<h4>
+Author
+</h4>
+<p>Landon Sego</p>
+</div>
+<div id="sed_comment" class="section level2">
+<h2>sed_comment</h2>
+<h3>
+Add or remove comment characters to a line
+</h3>
+<h4>
+Usage
+</h4>
+<pre class="r"><code>sed_comment(stream, at, add = TRUE, type = c("R", "C", "Java", "html",
+  "tex", "SAS"), warn = FALSE, ...)</code></pre>
+<h4>
+Arguments
+</h4>
+<dl class="rd-dl">
+<dt>
+stream
+</dt>
+<dd class="rd-dd">
+A character vector, each element typically (but not necessarily) containing the text from a single line in a file, which can be generated via <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code>.
+</dd>
+<dt>
+at
+</dt>
+<dd class="rd-dd">
+A vector of integers or a character string that designates the line(s) that will be commented. If <code>at</code> is numeric, it designates the line(s) (or elements) in <code>stream</code> that will be commented. The numeric value(s) of <code>at</code> must be in <code>[1:length(stream)]</code>. If <code>at</code> is a character string, the line(s) in <code>stream</code> that contain the string <code>at</code> are commented.
+</dd>
+<dt>
+add
+</dt>
+<dd class="rd-dd">
+A logical indicating whether comments are added to a single line (<code>TRUE</code>), or removed (<code>FALSE</code>).
+</dd>
+<dt>
+type
+</dt>
+<dd class="rd-dd">
+A character string uniquely indicating the programming language: R, C, Java, html, tex, and SAS. Customized commenting can be achieved by providing a character vector of length 2, where <code>type[1]</code> designates the beginning comment character and <code>type[2]</code> designates the ending comment character.
+</dd>
+<dt>
+…
+</dt>
+<dd class="rd-dd">
+Additional named arguments to <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code>, which are applicable if <code>at</code> is a character string. In other words, <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code> is used to search for the instances of <code>at</code>.
+</dd>
+</dl>
+<h4>
+Details
+</h4>
+<p class="rd-p">
+Some languages provide a way to comment multiple lines of code with a single pair of beginning and ending commenting symbols. However, <code>sed_comment</code> only adds/removes comment symbols to/from a single lines. When comments are added by <code>sed_comment</code>, the comment symbols are placed at the beginning (and, if applicable, at the end) of the selected lines. When comments are removed, the first instances of the beginning (and, if applicable, ending) comment symbols are removed from the selected lines.
+</p>
+<h4>
+Value
+</h4>
+<p class="rd-p">
+<dl>
+The new <code>stream</code> with the commented (or uncommented) lines. If the commenting fails because <code>at</code> is specified incorrectly, <code>stream</code> is returned unchanged.
+</dl>
+</p>
+<h4>
+Examples
+</h4>
+<pre class="r"><code>######################################################################
+# Let's creaple stream to demonstrate the commenting symbol in each
+# language
+######################################################################
+demoStream <- c("An R comment",
+               "A C comment",
+               "An html comment",
+               "A tex comment",
+               "A SAS comment",
+               "A custom comment")
+
+a <- sed_comment(demoStream, "R", type = "R")
+a <- sed_comment(a, "C", type = "C")
+a <- sed_comment(a, "html", type = "h")
+a <- sed_comment(a, "tex", type = "t")
+a <- sed_comment(a, "SAS", type = "S")
+a <- sed_comment(a, "custom", type = c("&", ";"))
+
+# Compare before and after
+as.stream(demoStream)
+a
+
+################################################################################
+# Various examples
+################################################################################
+aStream <- c("Here's a line to comment",
+            "# A line to uncomment",
+            "  <!-- Another commented line --> ",
+            "And some comments * embedded in the line ;")
+as.stream(aStream)
+
+# Comment the first line in C style
+stream <- sed_comment(aStream, "to comment", type = "C")
+
+# Comment the first line with a custom style
+a <- sed_comment(aStream, "to comment", type = c("&&", "##"))
+a
+
+# Remove the custom comments
+a <- sed_comment(a, 1, add = FALSE, type = c("&&", "##"))
+a
+
+# Remove the R comment from the 2nd line
+a <- sed_comment(a, 2, add = FALSE, type = "R")
+a
+
+# Remove the html comments
+a <- sed_comment(a, "Another", add = FALSE, type = "html")
+a
+
+# Remove the SAS comments
+sed_comment(a, "embedded", add = FALSE, type = "SAS")
+
+# Comment every line in Java style
+b <- sed_comment(aStream, "comment", type = "Java")
+b
+
+# Remove the Java comments from the second and fourth lines
+sed_comment(b, c(2, 4), add = FALSE, type = "Java")</code></pre>
+<h4>
+See also
+</h4>
+<p><code><a href=#sed_insert>sed_insert</a></code>, <code><a href=#sed_replace>sed_replace</a></code>, <code><a href=#sed_substitute>sed_substitute</a></code>, <code><a href=#streamedit>streamEdit</a></code></p>
+<h4>
+Author
+</h4>
+<p>Landon Sego</p>
+</div>
+</div>
+<div id="hi-level-wrapper" class="section level1">
+<h1>Hi-level wrapper</h1>
+<div id="streamedit" class="section level2">
+<h2>streamEdit</h2>
+<h3>
+High-level wrapper for stream editing functions
+</h3>
+<p class="rd-p">
+High-level wrapper for stream editing functions (<code><a href='sed_insert.html'>sed_insert</a></code>, <code><a href='sed_replace.html'>sed_replace</a></code>, <code><a href='sed_substitute.html'>sed_substitute</a></code>, and <code><a href='sed_comment.html'>sed_comment</a></code>) to execute any number of sequential insertion, replacement, substitution, or commenting steps.
+</p>
+<h4>
+Usage
+</h4>
+<pre class="r"><code>streamEdit(commandList, stream = NULL, inFile = NULL, outFile = NULL,
+  warn = FALSE)</code></pre>
+<h4>
+Arguments
+</h4>
+<dl class="rd-dl">
+<dt>
+commandList
+</dt>
+<dd class="rd-dd">
+A list that designates the insertion, replacement, substitution, or commenting commands that will be performed on <code>stream</code> (or the stream obtained from <code>inFile</code>). The list must have names corresponding to unique abbreviations of “insert”, “replace”, “substitute”, and/or “comment”. Each element in <code>commandList</code> must also be a list with names and values that correspond to the arguments of <code><a href=#sed_insert>sed_insert</a></code>, <code><a href=#sed_replace>sed_replace</a></code>, <code><a href=#sed_substitute>sed_substitute</a></code>, and/or <code><a href=#sed_comment>sed_comment</a></code> respectively. See Examples.
+</dd>
+<dt>
+stream
+</dt>
+<dd class="rd-dd">
+A character vector, each element typically (but not necessarily) containing the text from a single line in a file, which can be generated via <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code>.
+</dd>
+<dt>
+inFile
+</dt>
+<dd class="rd-dd">
+A character string designating a file that is to be read (using <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code> and will become a <code>stream</code>, where each line of the file is mapped to a single element in the character vector <code>stream</code>.
+</dd>
+<dt>
+outFile
+</dt>
+<dd class="rd-dd">
+A character string designating a file to which the resulting, edited stream will be written using <code><a href=http://www.inside-r.org/r-doc/base/writeLines>writeLines</a></code>. If <code>outFile = NULL</code>, no file is written.
+</dd>
+<dt>
+warn
+</dt>
+<dd class="rd-dd">
+A logical that, when <code>TRUE</code>, issues a worning if the insertion, replacement, subsitution, or commenting cannot be performed. See Details.
+</dd>
+</dl>
+<h4>
+Details
+</h4>
+<p class="rd-p">
+One (and only one) of <code>inFile</code> or <code>stream</code> must be specified.
+</p>
+<p class="rd-p">
+If <code>inFile</code> and <code>outFile</code> are the same, a backup copy of <code>inFile</code> is made by appending “~” to the end of the filename, e.g., if the original file were ‘<span class="file">aFile.txt</span>’, the backup would be ‘<span class="file">aFile.txt~</span>’.
+</p>
+<p class="rd-p">
+The value of <code>warn</code> in <code>streamEdit</code> is passed to the worker functions (<code><a href=#sed_insert>sed_insert</a></code>, <code><a href=#sed_replace>sed_replace</a></code>, <code><a href=#sed_substitute>sed_substitute</a></code>, and <code><a href=#sed_comment>sed_comment</a></code>) unless the <code>warn</code> argument is specified for a command in <code>commandList</code>, in which case, for that particular command, the locally supplied value of <code>warn</code> takes precedence.
+</p>
+<h4>
+Value
+</h4>
+<p class="rd-p">
+<dl>
+Invisibly returns the edited stream, and writes the stream to a file if <code>outFile</code> is supplied.
+</dl>
+</p>
+<h4>
+Examples
+</h4>
+<pre class="r"><code>################################################################################
+# Let's create an example stream we can edit
+################################################################################
+cat("Here's a line\n",
+   "Line after which we'll insert a string\n",
+   "A line we'll delete\n",
+   "A line we'll replace with something else\n",
+   "A line where we'll make a substitution\n",
+   "A line we'll comment\n",
+   "The last line\n",
+   sep = "", file = "tmpTest_streamEdit.txt")
+
+# Read the file into a 'stream'
+s <- readLines("tmpTest_streamEdit.txt")
+
+################################################################################
+# Excecute a series of commands 'manually', using the individual worker functions
+################################################################################
+
+s <- sed_insert(s, after = 3, insertion = "Here's an insertion")
+s <- sed_replace(s, at = "delete", replacement = NULL)
+s <- sed_replace(s, at = "we'll replace", replacement = "The replacement", fixed = TRUE)
+s <- sed_substitute(s, pattern = "make a substitution", replacement = "have a party")
+s <- sed_comment(s, at = "comment", type = "html")
+s
+
+################################################################################
+# Now execute these same commands using a single call to streamEdit(), along
+# with reading the input file and writing the output file
+################################################################################
+
+# Build the list of commands
+comList <- list(
+
+ # i for 'insert', arguments for sed_insert()
+ i = list(after = 3, insertion = "Here's an insertion"),
+
+ # r for 'replace', arguments for sed_replace()
+ r = list(at = "delete", replacement = NULL),
+
+ # r for 'replace', arguments for sed_replace()
+ r = list(at = "we'll replace", replacement = "The replacement", fixed = TRUE),
+
+ # s for 'substitute', arguments for sed_substitute()
+ s = list(pattern = "make a substitution", replacement = "have a party"),
+
+ # c for 'comment', arguments for sed_comment()
+ c = list(at = "comment", type = "html")
+
+)
+
+s1 <- streamEdit(comList, inFile = "tmpTest_streamEdit.txt",
+                outFile = "tmpTest_streamEdit1.txt")
+s1
+
+# Compare the results
+identical(s, s1)
+
+# Remove the files
+unlink(c("tmpTest_streamEdit.txt", "tmpTest_streamEdit1.txt"))</code></pre>
+<h4>
+See also
+</h4>
+<p><code><a href=#sed_insert>sed_insert</a></code>, <code><a href=#sed_replace>sed_replace</a></code>, <code><a href=#sed_substitute>sed_substitute</a></code>, <code><a href=#sed_comment>sed_comment</a></code></p>
+<h4>
+Author
+</h4>
+<p>Landon Sego</p>
+</div>
+</div>
+<div id="the-stream-class-and-print-method" class="section level1">
+<h1>The ‘stream’ class and print method</h1>
+<div id="as.stream" class="section level2">
+<h2>as.stream</h2>
+<h3>
+Converts a character vector to an object of class “stream”
+</h3>
+<p class="rd-p">
+Converts a character vector to an object of class “stream” to take advantage of the print method
+</p>
+<h4>
+Usage
+</h4>
+<pre class="r"><code>as.stream(obj)
+
+print(x, ...)</code></pre>
+<h4>
+Arguments
+</h4>
+<dl class="rd-dl">
+<dt>
+obj
+</dt>
+<dd class="rd-dd">
+The character vector to be converted to a “stream” object
+</dd>
+<dt>
+x
+</dt>
+<dd class="rd-dd">
+The “stream” object to be printed.
+</dd>
+<dt>
+…
+</dt>
+<dd class="rd-dd">
+Ignored
+</dd>
+</dl>
+<h4>
+Value
+</h4>
+<p class="rd-p">
+<dl>
+The same character vector, only it now inherits from class “stream”
+</dl>
+</p>
+<h4>
+Methods (by generic)
+</h4>
+<p class="rd-p">
+<ul>
+<li>
+<code>print</code>: Prints an object of class “stream” by removing quotes from the strings and printing each element of the character vector on its own line.
+</li>
+</ul>
+</p>
+<h4>
+Examples
+</h4>
+<pre class="r"><code>aStream <- c("string1", "string2", "string3")
+aStream
+
+# Note how it prints after we convert it to a stream object:
+as.stream(aStream)</code></pre>
+<h4>
+Author
+</h4>
+<p>Landon Sego</p>
+</div>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <div id="footer">
+    <div class="container">
+      <div class="col-md-6">
+                <p>&copy; Battelle Memorial Institute, 2016</p>
+              </div>
+      <div class="col-md-6">
+        <p class="pull-right">created with <a href="https://github.com/hafen/packagedocs">packagedocs</a></p>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>

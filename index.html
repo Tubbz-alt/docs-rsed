@@ -1,0 +1,345 @@
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc" />
+
+    <meta name="author" content="Landon Sego" />
+  
+  
+  <title>rsed</title>
+
+    <script src="assets/jquery-1.11.0/jquery.min.js"></script>
+  <link href="assets/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="assets/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+  <script src="assets/bootstrap-3.3.2/shim/html5shiv.min.js"></script>
+  <script src="assets/bootstrap-3.3.2/shim/respond.min.js"></script>
+  <link href="assets/highlight-8.4/tomorrow.css" rel="stylesheet" />
+  <script src="assets/highlight-8.4/highlight.pack.js"></script>
+  <link href="assets/fontawesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+  <script src="assets/stickykit-1.1.1/sticky-kit.min.js"></script>
+  <script src="assets/jqueryeasing-1.3/jquery.easing.min.js"></script>
+  <link href="assets/packagedocs-0.0.1/pd.css" rel="stylesheet" />
+  <script src="assets/packagedocs-0.0.1/pd.js"></script>
+  <script src="assets/packagedocs-0.0.1/pd-collapse-toc.js"></script>
+  
+  
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+
+<body>
+
+  
+  <header class="navbar navbar-white navbar-fixed-top" role="banner" id="header">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+                <span class="navbar-brand">
+<a href="http://pnnl.github.io"> <img src='figures/icon.png' alt='tessera icon' width='30px' height='30px' style='margin-top: -3px;'> </a>
+        </span>
+                <a href="index.html" class="navbar-brand page-scroll">
+        rsed - Stream editing in R
+        </a>
+      </div>
+            <nav class="collapse navbar-collapse" role="navigation">
+        <ul class="nav nav-pills pull-right">
+<li class="active">
+<a href='index.html'>Docs</a>
+</li>
+<li>
+<a href='rd.html'>Package Ref</a>
+</li>
+<li>
+<a href='https://github.com/pnnl/rsed'>Github <i class='fa fa-github'></i></a>
+</li>
+        </ul>
+      </nav>
+          </div>
+  </header>
+
+  <!-- Begin Body -->
+  <div class="container">
+    <div class="row">
+            <div class="col-md-3" id="sidebar-col">
+        <div id="toc">
+          <ul>
+          <li><a href="#introduction">Introduction</a><ul>
+          <li><a href="#whats-new-here">What’s new here?</a></li>
+          <li><a href="#package-installation">Package installation</a></li>
+          <li><a href="#whats-a-stream">What’s a stream?</a></li>
+          </ul></li>
+          <li><a href="#stream-editing-functions">Stream editing functions</a><ul>
+          <li><a href="#insertion">Insertion</a></li>
+          <li><a href="#replacement">Replacement</a></li>
+          <li><a href="#deletion">Deletion</a></li>
+          <li><a href="#substitution">Substitution</a></li>
+          <li><a href="#commenting">Commenting</a></li>
+          </ul></li>
+          <li><a href="#hi-level-wrapper">Hi-level wrapper</a></li>
+          <li><a href="#the-stream-class-and-print-method">The ‘stream’ class and ‘print’ method</a></li>
+          <li><a href="#a-relevant-example">A relevant example</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9" id="content-col">
+      
+<div id="content-top"></div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The <code>rsed</code> package contains tools for stream editing: manipulating text files by making insertions, replacements, deletions, substitutions, or commenting. It hails from the powerful Unix command, <code>sed</code>. See, for example, the <a href="https://www.gnu.org/software/sed/manual/sed.html">GNU documentation for <code>sed</code></a>. While this package is not nearly as powerful as <code>sed</code>, it is much simpler to use.</p>
+<p>I find it particularly useful in workflows that create text files (e.g. html or othwerwise) that need to be tweaked a little before they can be used. For example, I use <code>rsed</code> when files of interest are produced by other packages, and I don’t want to delve into the (complicated) source code in order to produce a slightly different result in the output text files. In this vignette I’ll take you through a simple tour of the capability of the <code>rsed</code> package. Additional details can be found in the standard package help files, which you can find by following the blue links.</p>
+<div id="whats-new-here" class="section level2">
+<h2>What’s new here?</h2>
+<p>You might ask, “doesn’t this package duplicate functionality already available in R? Can’t I perform these same tasks using tools like <code>readLines()</code>, <code>gsub()</code>, <code>grep()</code>, etc.?” The answer is yes. That being said, the value of the <code>rsed</code> package is that it collapses the several steps of code that would be required for stream editing into a call to a single function.</p>
+</div>
+<div id="package-installation" class="section level2">
+<h2>Package installation</h2>
+<p>Package installation is made easy with <code>devtools</code>:</p>
+<pre class="r"><code># If not devtools not already installed
+install.packages(&quot;devtools&quot;) 
+
+devtools::install_github(&quot;pnnl/rsed&quot;)</code></pre>
+<p>Now load the package as usual:</p>
+<pre class="r"><code>library(rsed)</code></pre>
+</div>
+<div id="whats-a-stream" class="section level2">
+<h2>What’s a stream?</h2>
+<p>For our purposes, a <em>stream</em> is simply a character vector. The mental model is that each element of the vector corresponds to a line in a file. While this vignette and the package documentation typically discuss stream editing in terms of manipulating files stored on disk, reads and writes to disk are not required. The functions in <code>rsed</code> will operate on any stream (i.e. any character vector).</p>
+<p>Here’s an example of a stream, from <em>To a Skylark</em>, by Percy Bysshe Shelley:</p>
+<pre class="r"><code>skylark &lt;- c(&quot;Higher still and higher&quot;,
+             &quot;From the earth thou springest&quot;,
+             &quot;Like a cloud of fire;&quot;,
+             &quot;The blue deep thou wingest,&quot;,
+             &quot;And singing still dost soar, and soaring ever singest.&quot;)
+
+# To view it as a stream:
+as.stream(skylark)</code></pre>
+<pre><code>[1] Higher still and higher
+[2] From the earth thou springest
+[3] Like a cloud of fire;
+[4] The blue deep thou wingest,
+[5] And singing still dost soar, and soaring ever singest.</code></pre>
+<p>All of the functions in <code>rsed</code> operate on and return character vectors like <code>skylark</code>.</p>
+</div>
+</div>
+<div id="stream-editing-functions" class="section level1">
+<h1>Stream editing functions</h1>
+<p><code>rsed</code> can perform five types of editing:</p>
+<ul>
+<li>Insertion of new lines at any point in the file</li>
+<li>Replacement of entire lines</li>
+<li>Deletion of entire lines</li>
+<li>Substituting one string for another</li>
+<li>Comment out a line using the syntax of any programming language</li>
+</ul>
+<p>We’ll look at each in turn. To avoid marring Shelley’s lovely verse, let’s create something we’d like to edit and write it to a file:</p>
+<pre class="r"><code>cat(&quot;Add something after this line\n&quot;,
+    &quot;Replace this line\n&quot;,
+    &quot;Delete this line\n&quot;,
+    &quot;Substitute &#39;this&#39; for &#39;that&#39;\n&quot;,
+    &quot;Comment this line\n&quot;,
+    file = &quot;stream.txt&quot;, sep = &quot;&quot;)</code></pre>
+<p>The file <code>stream.txt</code> looks like this:</p>
+<pre><code>Add something after this line 
+Replace this line 
+Delete this line 
+Substitute &#39;this&#39; for &#39;that&#39; 
+Comment this line</code></pre>
+<p>To illustrate how processing this stream would work if it began as a file, we would need to read the file and produce a <em>stream</em> using <code>readLines()</code>, such that each line of the file is an element in a character vector:</p>
+<pre class="r"><code>s &lt;- as.stream(readLines(&quot;stream.txt&quot;))</code></pre>
+<p>Now we can operate on the stream <code>s</code>.</p>
+<div id="insertion" class="section level2">
+<h2>Insertion</h2>
+<p>Inserting new lines is accomplished by <code><a target='_blank' href='rd.html#sed_insert'>sed_insert()</a></code>. So, for easy comparison, here’s the original stream, <code>s</code>:</p>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;that&#39;
+[5] Comment this line</code></pre>
+<p>And here’s what we get after the insertion:</p>
+<pre class="r"><code>sed_insert(s, &quot;Add something after this line&quot;, &quot;Here&#39;s the addition&quot;)</code></pre>
+<pre><code>[1] Add something after this line
+[2] Here&#39;s the addition
+[3] Replace this line
+[4] Delete this line
+[5] Substitute &#39;this&#39; for &#39;that&#39;
+[6] Comment this line</code></pre>
+</div>
+<div id="replacement" class="section level2">
+<h2>Replacement</h2>
+<p>Replacing an entire line is accomplished by <code><a target='_blank' href='rd.html#sed_replace'>sed_replace()</a></code>. Again for easy comparison, here’s the original stream, <code>s</code>:</p>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;that&#39;
+[5] Comment this line</code></pre>
+<p>And after the replacement:</p>
+<pre class="r"><code>sed_replace(s, &quot;Replace this&quot;, &quot;A replacement&quot;)</code></pre>
+<pre><code>[1] Add something after this line
+[2] A replacement
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;that&#39;
+[5] Comment this line</code></pre>
+</div>
+<div id="deletion" class="section level2">
+<h2>Deletion</h2>
+<p>Deleting an entire line is also accomplished by <code><a target='_blank' href='rd.html#sed_replace'>sed_replace()</a></code>. The original stream, <code>s</code>:</p>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;that&#39;
+[5] Comment this line</code></pre>
+<p>and after the deletion:</p>
+<pre class="r"><code>sed_replace(s, &quot;Delete this&quot;, NULL)</code></pre>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Substitute &#39;this&#39; for &#39;that&#39;
+[4] Comment this line</code></pre>
+</div>
+<div id="substitution" class="section level2">
+<h2>Substitution</h2>
+<p>Substitution is searching for a string and replacing it with another. We can do this with <code><a target='_blank' href='rd.html#sed_substitute'>sed_substitute()</a></code>. The original stream <code>s</code>:</p>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;that&#39;
+[5] Comment this line</code></pre>
+<p>After substitution:</p>
+<pre class="r"><code>sed_substitute(s, &quot;&#39;that&#39;&quot;, &quot;&#39;this&#39;&quot;)</code></pre>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;this&#39;
+[5] Comment this line</code></pre>
+</div>
+<div id="commenting" class="section level2">
+<h2>Commenting</h2>
+<p>We can use <code><a target='_blank' href='rd.html#sed_comment'>sed_comment()</a></code> to add or remove comment characters from a number of languages to one or more selected lines. The supported languages are R, C, Java, html, tex, and SAS. However, any commenting characters can be provided. The original stream, <code>s</code>:</p>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;that&#39;
+[5] Comment this line</code></pre>
+<p>And after commenting the last line:</p>
+<pre class="r"><code>sed_comment(s, &quot;Comment&quot;, type = &quot;html&quot;)</code></pre>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;that&#39;
+[5] &lt;!--Comment this line--&gt;</code></pre>
+</div>
+</div>
+<div id="hi-level-wrapper" class="section level1">
+<h1>Hi-level wrapper</h1>
+<p>All the edits shown in the previous section could be accomplished using the following steps:</p>
+<pre class="r"><code>s &lt;- readLines(&quot;stream.txt&quot;)
+s &lt;- sed_insert(s, after = &quot;Add something&quot;, insertion = &quot;Here&#39;s the addition&quot;)
+s &lt;- sed_replace(s, at = 3, replacement = &quot;A replacement&quot;)
+s &lt;- sed_replace(s, at = 4, replacement = NULL)
+s &lt;- sed_substitute(s, pattern = &quot;&#39;that&#39;&quot;, replacement = &quot;&#39;this&#39;&quot;)
+s &lt;- sed_comment(s, at = &quot;Comment&quot;, type = &quot;html&quot;)
+writeLines(s, con = &quot;newStream1.txt&quot;)</code></pre>
+<p>Alternatively, we could use the hi-level function, <code><a target='_blank' href='rd.html#streamedit'>streamEdit()</a></code>, to execute all of these steps with a single function call:</p>
+<pre class="r"><code>streamEdit(list(i = list(after = &quot;Add something&quot;, insertion = &quot;Here&#39;s the addition&quot;),
+                r = list(at = 3, replacement = &quot;A replacement&quot;),
+                r = list(at = 4, replacement = NULL),
+                s = list(pattern = &quot;&#39;that&#39;&quot;, replacement = &quot;&#39;this&#39;&quot;),
+                c = list(at = &quot;Comment&quot;, type = &quot;html&quot;)),
+            inFile = &quot;stream.txt&quot;, 
+            outFile = &quot;newStream2.txt&quot;)</code></pre>
+<p>So here’s the original:</p>
+<pre class="r"><code>as.stream(readLines(&quot;stream.txt&quot;))</code></pre>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;that&#39;
+[5] Comment this line</code></pre>
+<p>And here are the changes:</p>
+<pre class="r"><code>as.stream(readLines(&quot;newStream2.txt&quot;))</code></pre>
+<pre><code>[1] Add something after this line
+[2] Here&#39;s the addition
+[3] A replacement
+[4] Substitute &#39;this&#39; for &#39;this&#39;
+[5] &lt;!--Comment this line--&gt;</code></pre>
+<p>And for good measure, let’s compare the results of these two approaches:</p>
+<pre class="r"><code># The result from calling each function individually
+s1 &lt;- readLines(&quot;newStream1.txt&quot;)
+
+# The result from the single call to streamEdit()
+s2 &lt;- readLines(&quot;newStream2.txt&quot;)
+
+identical(s1, s2)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div id="the-stream-class-and-print-method" class="section level1">
+<h1>The ‘stream’ class and ‘print’ method</h1>
+<p><code><a target='_blank' href='rd.html#as_stream'>as.stream()</a></code> converts a character vector to a <code>stream</code> object by adding <code>stream</code> to it’s class:</p>
+<pre class="r"><code>s &lt;- readLines(&quot;stream.txt&quot;)
+class(s)</code></pre>
+<pre><code>[1] &quot;character&quot;</code></pre>
+<pre class="r"><code>class(as.stream(s))</code></pre>
+<pre><code>[1] &quot;stream&quot;    &quot;character&quot;</code></pre>
+<p>The only method for the <code>stream</code> class is <code>print</code>, which makes reading the stream easier. Consider printing without the <code>stream</code> class:</p>
+<pre class="r"><code>print(s)</code></pre>
+<pre><code>[1] &quot;Add something after this line&quot; &quot;Replace this line&quot;            
+[3] &quot;Delete this line&quot;              &quot;Substitute &#39;this&#39; for &#39;that&#39;&quot; 
+[5] &quot;Comment this line&quot;            </code></pre>
+<p>versus printing an object with the <code>stream</code> class:</p>
+<pre class="r"><code>print(as.stream(s))</code></pre>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;that&#39;
+[5] Comment this line</code></pre>
+<p>Note that character vectors do not need to be converted to streams via <code><a target='_blank' href='rd.html#as_stream'>as.stream()</a></code> before passing them to the stream editing functions. Either way works:</p>
+<pre class="r"><code>sed_comment(s, 5, type = &quot;R&quot;)</code></pre>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;that&#39;
+[5] #Comment this line</code></pre>
+<pre class="r"><code>sed_comment(as.stream(s), 5, type = &quot;R&quot;)</code></pre>
+<pre><code>[1] Add something after this line
+[2] Replace this line
+[3] Delete this line
+[4] Substitute &#39;this&#39; for &#39;that&#39;
+[5] #Comment this line</code></pre>
+</div>
+<div id="a-relevant-example" class="section level1">
+<h1>A relevant example</h1>
+<p>The online documentation of the <code>rsed</code> package is produced by <a href="https://github.com/hafen/packagedocs">packagedocs</a> (thank you Ryan Hafen!). For some reason however, on the <code><a target='_blank' href='rd.html#as_stream'>as.stream()</a></code> help page, the usage for the <code>print</code> method is incorrectly rendered like this:</p>
+<pre><code>printstream(x, ...)</code></pre>
+<p>A quick fix to this problem was to add the following to the end of the documentation <a href="https://github.com/pnnl/docs-rsed/blob/gh-pages/build.R">build script</a>:</p>
+<pre><code>streamEdit(list(s = list(pattern = &quot;printstream(&quot;, 
+                         replacement = &quot;print(&quot;, 
+                         fixed = TRUE)),
+           inFile = &quot;rd.html&quot;, outFile = &quot;rd.html&quot;)</code></pre>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <div id="footer">
+    <div class="container">
+      <div class="col-md-6">
+                <p>&copy; Battelle Memorial Institute, 2016</p>
+              </div>
+      <div class="col-md-6">
+        <p class="pull-right">created with <a href="https://github.com/hafen/packagedocs">packagedocs</a></p>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>
