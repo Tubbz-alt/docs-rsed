@@ -13,17 +13,17 @@ navpills: |
   <li><a href='https://github.com/pnnl/rsed'>Github <i class='fa fa-github'></i></a></li>
 brand: |-
   <a href="http://pnnl.github.io">
-  <img src='figures/icon.png' alt='tessera icon' width='30px' height='30px' style='margin-top: -3px;'>
+  <img src='figures/icon.png' alt='PNNL icon' width='30px' height='30px' style='margin-top: -3px;'>
   </a>
 ---
-<h1>Stream editing in R</h1>
+<h1>Stream Editing in R</h1>
 
-<p><strong>Authors:</strong> Landon Sego</p>
+<p><strong>Authors:</strong> (none)</p>
 <p><strong>Version:</strong> 0.1.0</p>
 <p><strong>License:</strong> file LICENSE</p>
 
 <h4>Description</h4>
-<p>Tools for stream editing:  manipulating text files with insertions, replacements, deletions, substitutions, and commenting</p>
+<p>Tools for stream editing:  manipulating text files with insertions, replacements, deletions, substitutions, and commenting.</p>
 
 <h4>Depends</h4>
 <p>(none)</p>
@@ -315,6 +315,9 @@ line (<code>TRUE</code>), or removed (<code>FALSE</code>).</dd>
   <dd class="rd-dd">A character string uniquely indicating the programming language: R, C, Java, html, tex, and SAS.
 Customized commenting can be achieved by providing a character vector of length 2, where <code>type[1]</code> designates
 the beginning comment character and <code>type[2]</code> designates the ending comment character.</dd>
+  <dt>warn</dt>
+  <dd class="rd-dd">If <code>TRUE</code>, warning messages are produced if commenting (or uncommenting) fails due to mispecifification
+of <code>at</code>.</dd>
   <dt>...</dt>
   <dd class="rd-dd">Additional named arguments to <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code>, which are applicable if <code>at</code> is a character string.
 In other words, <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code> is used to search for the instances of <code>at</code>.</dd>
@@ -340,7 +343,7 @@ specified incorrectly, <code>stream</code> is returned unchanged.
 
 <h4>Examples</h4>
 <pre class="r"><code>######################################################################
-# Let's creaple stream to demonstrate the commenting symbol in each
+# Let's create a stream to demonstrate the commenting symbol in each
 # language
 ######################################################################
 demoStream <- c("An R comment",
@@ -361,9 +364,9 @@ a <- sed_comment(a, "custom", type = c("&", ";"))
 as.stream(demoStream)
 a
 
-################################################################################
+######################################################################
 # Various examples
-################################################################################
+######################################################################
 aStream <- c("Here's a line to comment",
             "# A line to uncomment",
             "  <!-- Another commented line --> ",

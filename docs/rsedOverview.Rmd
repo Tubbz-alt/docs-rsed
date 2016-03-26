@@ -205,3 +205,8 @@ A quick fix to this problem was to add the following to the end of the documenta
                inFile = "rd.html", outFile = "rd.html")
 
 
+# Citation
+
+Please cite the `rsed` package using the following reference:
+
+Sego LH. 2016. rsed: Stream editing in R. Pacific Northwest National Laboratory. https://pnnl.github.io/rsed.
