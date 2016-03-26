@@ -318,7 +318,7 @@ class(s)</code></pre>
 <h1>A relevant example</h1>
 <p>The online documentation of the <code>rsed</code> package is produced by <a href="https://github.com/hafen/packagedocs">packagedocs</a> (thank you Ryan Hafen!). For some reason however, on the <code><a target='_blank' href='rd.html#as_stream'>as.stream()</a></code> help page, the usage for the <code>print</code> method is incorrectly rendered like this:</p>
 <pre><code>printstream(x, ...)</code></pre>
-<p>A quick fix to this problem was to add the following to the end of the documentation <a href="https://github.com/pnnl/docs-rsed/blob/gh-pages/build.R">build script</a>:</p>
+<p>A quick fix to this problem was to essentially add the following to the end of the documentation <a href="https://github.com/pnnl/docs-rsed/blob/gh-pages/build.R">build script</a>:</p>
 <pre><code>streamEdit(list(s = list(pattern = &quot;printstream(&quot;, 
                          replacement = &quot;print(&quot;, 
                          fixed = TRUE)),
