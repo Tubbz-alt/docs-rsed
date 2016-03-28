@@ -1,8 +1,8 @@
 # Introduction
 
-The `rsed` package contains tools for stream editing:  manipulating text files by making insertions, replacements, deletions, substitutions, or commenting. It hails from the powerful Unix command, `sed`.  See, for example, the [GNU documentation for `sed`](https://www.gnu.org/software/sed/manual/sed.html).  While this package is not nearly as powerful as `sed`, it is much simpler to use.  
+The `rsed` package contains tools for stream editing:  manipulating text files by making insertions, replacements, deletions, substitutions, or commenting. It hails from the powerful Unix command, `sed`.  See, for example, the [GNU documentation for `sed`](https://www.gnu.org/software/sed/manual/sed.html).  While this package is not nearly as powerful as `sed`, it is much simpler to use. Just because `rsed` was developed to mimic some of the functionality of a Unix command, be advised it works on all the standard platforms, including Windows.
 
-I find it particularly useful in workflows that create text files (e.g. html or othwerwise) that need to be tweaked a little before they can be used. For example, I use `rsed` when files of interest are produced by other packages, and I don't want to delve into the (complicated) source code in order to produce a slightly different result in the output text files.  In this vignette I'll take you through a simple tour of the capability of the `rsed` package.  Additional details can be found in the standard package help files, which you can find by following the blue links.
+I find `rsed` to be particularly useful in workflows that create text files (e.g. html or otherwise) that need to be tweaked a little before they can be used. For example, I use it when files of interest are produced by other packages, and I don't want to delve into the (complicated) source code in order to produce a slightly different result in the output text files.  In this vignette I'll take you through a simple tour of the capability of the `rsed` package.  Additional details can be found in the package [help files](rd.html).
 
 ## What's new here?
 
