@@ -554,7 +554,6 @@ Landon Sego
 
 <h3>Converts a character vector to an object of class "stream"</h3>
 
-<p class="rd-p">Converts a character vector to an object of class "stream" to take advantage of the print method</p>
 
 <h4>Usage</h4>
 <pre class="r"><code>as.stream(obj)

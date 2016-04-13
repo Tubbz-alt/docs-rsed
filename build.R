@@ -26,10 +26,15 @@ if(!require("rsed")) {
 }
 
 # Make some manual edits to rd.html that didn't render correctly
-rsed::streamEdit(list(s = list(pattern = "printstream(",
-                               replacement = "print(",
+
+rsed::streamEdit(list(# Fix the print method
+                      r = list(at = "printstream(x, ...)</code></pre>",
+                               replacement = "## S3 method for class 'stream'\nprint(x, ...)</code></pre>",
                                fixed = TRUE),
+
+                      # Fix the Author 
                       r = list(at = "<strong>Authors:</strong> (none)",
                                replacement = "<strong>Author:</strong> Landon Sego",
                                fixed = TRUE)),
+                 
                  inFile = "rd.html", outFile = "rd.html")

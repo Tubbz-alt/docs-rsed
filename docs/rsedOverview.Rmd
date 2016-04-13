@@ -197,13 +197,13 @@ The online documentation of the `rsed` package is produced by [packagedocs](http
 
     printstream(x, ...)
 
-A quick fix to this problem was to essentially add the following to the end of the documentation [build script](https://github.com/pnnl/docs-rsed/blob/gh-pages/build.R):
+A quick fix to this problem was to add something like the following to the end of the documentation [build script](https://github.com/pnnl/docs-rsed/blob/gh-pages/build.R).  Note how this fixes the `printstream` typo, and inserts a line above it as well:
 
-    streamEdit(list(s = list(pattern = "printstream(", 
-                             replacement = "print(", 
-                             fixed = TRUE)),
-               inFile = "rd.html", outFile = "rd.html")
+    fix <- list(at = "printstream(x, ...)</code></pre>",
+                replacement = "## S3 method for class 'stream'\nprint(x, ...)</code></pre>",
+                fixed = TRUE))
 
+    streamEdit(list(r = fix), inFile = "rd.html", outFile = "rd.html")
 
 # Citation
 
