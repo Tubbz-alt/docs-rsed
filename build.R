@@ -38,7 +38,7 @@ rsed::streamEdit(list(# Copyright on page
 
 rsed::streamEdit(list(# Links for LICENSE
                       s = list(pattern = "BSD_3_clause + file LICENSE",
-                               replacement = paste("<a href=https://opensource.org/licenses/BSD-3-Clause>BSD_3_clause</a> +",
+                               replacement = paste("<a href=https://cran.r-project.org/web/licenses/BSD_3_clause>BSD_3_clause</a> +",
                                                    "<a href='LICENSE.txt'>LICENSE</a>"),
                                fixed = TRUE),
           
