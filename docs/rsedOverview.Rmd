@@ -208,7 +208,7 @@ unlink(c("stream.txt", "newStream1.txt", "newStream2.txt"))
 ```
 
 # A relevant example
-The online documentation of the `rsed` package is produced by [packagedocs](https://github.com/hafen/packagedocs) (thank you Ryan Hafen!).  For some reason however, on the `r rdl("as.stream()")` help page, the usage for the `print` method is incorrectly rendered like this:
+The online documentation of the `rsed` package is produced by [packagedocs](https://github.com/hafen/packagedocs) (thank you, Ryan Hafen).  For some reason however, on the `r rdl("as.stream()")` help page, the usage for the `print` method is incorrectly rendered like this:
 
     printstream(x, ...)
 
