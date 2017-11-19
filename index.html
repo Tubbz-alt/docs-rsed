@@ -9,7 +9,7 @@
   
   <title>rsed</title>
 
-    <script src="assets/jquery-1.11.0/jquery.min.js"></script>
+    <script src="assets/jquery-1.11.3/jquery.min.js"></script>
   <link href="assets/bootstrap-3.3.2/css/bootstrap.min.css" rel="stylesheet" />
   <script src="assets/bootstrap-3.3.2/js/bootstrap.min.js"></script>
   <script src="assets/bootstrap-3.3.2/shim/html5shiv.min.js"></script>
@@ -87,6 +87,7 @@
           <li><a href="#the-stream-class-and-print-method">The ‘stream’ class and ‘print’ method</a></li>
           <li><a href="#a-relevant-example">A relevant example</a></li>
           <li><a href="#citation">Citation</a></li>
+          <li><a href="#acknowledgements">Acknowledgements</a></li>
           </ul>
         </div>
       </div>
@@ -99,17 +100,27 @@
 <p>I find <code>rsed</code> to be particularly useful in workflows that create text files (e.g. html or otherwise) that need to be tweaked a little before they can be used. For example, I use it when files of interest are produced by other packages, and I don’t want to delve into the (complicated) source code in order to produce a slightly different result in the output text files. In this vignette I’ll take you through a simple tour of the capability of the <code>rsed</code> package. Additional details can be found in the package <a href="rd.html">help files</a>.</p>
 <div id="whats-new-here" class="section level2">
 <h2>What’s new here?</h2>
-<p>You might ask, “doesn’t this package duplicate functionality already available in R? Can’t I perform these same tasks using base R functions like <a href="http://www.inside-r.org/r-doc/base/readLines">readLines()</a>, <a href="http://www.inside-r.org/r-doc/base/gsub">gsub()</a>, <a href="http://www.inside-r.org/r-doc/base/grep">grep()</a>, etc.?” The answer is yes. That being said, the value of the <code>rsed</code> package is that it collapses the several steps of code that would be required for stream editing into a call to a single function.</p>
+<p>You might ask, “doesn’t this package duplicate functionality already available in R? Can’t I perform these same tasks using base R functions like <a href="https://www.rdocumentation.org/packages/base/topics/readLines">readLines()</a>, <a href="https://www.rdocumentation.org/packages/base/topics/gsub">gsub()</a>, <a href="https://www.rdocumentation.org/packages/base/topics/grep">grep()</a>, etc.?” The answer is yes. That being said, the value of the <code>rsed</code> package is that it collapses the several steps of code that would be required for stream editing into a call to a single function.</p>
 </div>
 <div id="package-installation" class="section level2">
 <h2>Package installation</h2>
-<p>Package installation is made easy with <a href="https://cran.r-project.org/web/packages/devtools/index.html">devtools</a>:</p>
-<pre class="r"><code># If devtools is not already installed
+<p>You can install the package from <a href="https://cran.r-project.org/">CRAN</a> or from <a href="https://github.com">GitHub</a>:</p>
+<div id="cran" class="section level3">
+<h3>CRAN</h3>
+<pre class="r"><code>install.packages(&quot;rsed&quot;)</code></pre>
+<p>S ### GitHub</p>
+<p>You can install from <a href="https://github.com">GitHub</a> using the <a href="https://CRAN.R-project.org/package=devtools">devtools</a> package as follows:</p>
+<pre class="r"><code># If devtools is not already installed, do this:
 install.packages(&quot;devtools&quot;) 
 
+# Now install the package
 devtools::install_github(&quot;pnnl/rsed&quot;)</code></pre>
-<p>Now load the package as usual:</p>
+</div>
+<div id="after-installation" class="section level3">
+<h3>After installation</h3>
+<p>After intstallation, you can load the package as usual:</p>
 <pre class="r"><code>library(rsed)</code></pre>
+</div>
 </div>
 <div id="whats-a-stream" class="section level2">
 <h2>What’s a stream?</h2>
@@ -329,6 +340,10 @@ streamEdit(list(r = fix), inFile = &quot;rd.html&quot;, outFile = &quot;rd.html&
 <h1>Citation</h1>
 <p>Please cite the <code>rsed</code> package using the following reference:</p>
 <p>Sego LH. 2016. rsed: Stream editing in R. Pacific Northwest National Laboratory. <a href="https://pnnl.github.io/rsed" class="uri">https://pnnl.github.io/rsed</a>.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1>Acknowledgements</h1>
+<p>This package was developed with support from the Signature Discovery Initiative at Pacific Northwest National Laboratory, conducted under the Laboratory Directed Research and Development Program at PNNL, a multiprogram national laboratory operated by Battelle for the U.S. Department of Energy.</p>
 </div>
 
 

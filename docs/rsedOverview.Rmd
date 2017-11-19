@@ -6,21 +6,36 @@ I find `rsed` to be particularly useful in workflows that create text files (e.g
 
 ## What's new here?
 
-You might ask, "doesn't this package duplicate functionality already available in R?  Can't I perform these same tasks using base R functions like [readLines()](http://www.inside-r.org/r-doc/base/readLines), [gsub()](http://www.inside-r.org/r-doc/base/gsub), [grep()](http://www.inside-r.org/r-doc/base/grep), etc.?"  The answer is yes.  That being said, the value of the `rsed` package is that it collapses the several steps of code that would be required for stream editing into a call to a single function.
+You might ask, "doesn't this package duplicate functionality already available in R?  Can't I perform these same tasks using base R functions like [readLines()](https://www.rdocumentation.org/packages/base/topics/readLines), [gsub()](https://www.rdocumentation.org/packages/base/topics/gsub), [grep()](https://www.rdocumentation.org/packages/base/topics/grep), etc.?"  The answer is yes.  That being said, the value of the `rsed` package is that it collapses the several steps of code that would be required for stream editing into a call to a single function.
 
 ## Package installation
 
-Package installation is made easy with [devtools](https://cran.r-project.org/web/packages/devtools/index.html):
+You can install the package from [CRAN](https://cran.r-project.org/) or from [GitHub](https://github.com):
+
+### CRAN
+
+```{r instalCRAN, eval = FALSE, echo = TRUE}
+install.packages("rsed")
+```
+S
+### GitHub
+
+You can install from  [GitHub](https://github.com) using the [devtools](https://CRAN.R-project.org/package=devtools) package as follows:
+
 ```{r instal, eval = FALSE, echo = TRUE}
-# If devtools is not already installed
+# If devtools is not already installed, do this:
 install.packages("devtools") 
 
+# Now install the package
 devtools::install_github("pnnl/rsed")
 ```
-Now load the package as usual:
+### After installation
+
+After intstallation, you can load the package as usual:
 ```{r loadpackage, eval = TRUE, echo = TRUE}
 library(rsed)
 ```
+
 ## What's a stream?
 
 For our purposes, a *stream* is simply a character vector. The mental model is that each element of the vector corresponds to a line in a file.
@@ -210,3 +225,7 @@ A quick fix to this problem was to add something like the following to the end o
 Please cite the `rsed` package using the following reference:
 
 Sego LH. 2016. rsed: Stream editing in R. Pacific Northwest National Laboratory. https://pnnl.github.io/rsed.
+
+# Acknowledgements
+
+This package was developed with support from the Signature Discovery Initiative at Pacific Northwest National Laboratory, conducted under the Laboratory Directed Research and Development Program at PNNL, a multiprogram national laboratory operated by Battelle for the U.S. Department of Energy. 

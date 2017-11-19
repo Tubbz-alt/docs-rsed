@@ -18,9 +18,9 @@ brand: |-
 ---
 <h1>Stream Editing in R</h1>
 
-<p><strong>Authors:</strong> (none)</p>
-<p><strong>Version:</strong> 0.1.0</p>
-<p><strong>License:</strong> file LICENSE</p>
+<p><strong>Authors:</strong> Landon Sego <LHS@byu.net> [aut, cre]</p>
+<p><strong>Version:</strong> 0.1.1</p>
+<p><strong>License:</strong> BSD_3_clause + file LICENSE</p>
 
 <h4>Description</h4>
 <p>Tools for stream editing:  manipulating text files with insertions, replacements, deletions, substitutions, and commenting.</p>
@@ -32,8 +32,7 @@ brand: |-
 <p>(none)</p>
 
 <h4>Suggests</h4>
-<p>
-testthat</p>
+<p>testthat</p>
 
 <h4>Enhances</h4>
 <p>(none)</p>
@@ -54,23 +53,23 @@ testthat</p>
 <dl class="rd-dl">
   <dt>stream</dt>
   <dd class="rd-dd">A character vector, each element typically (but not necessarily) containing the text
-from a single line in a file, which can be generated via <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code>.</dd>
+from a single line in a file, which can be generated via <code><a href=http://www.rdocumentation.org/packages/base/topics/readLines>readLines</a></code>.</dd>
   <dt>after</dt>
   <dd class="rd-dd">An integer or character string that designates where <code>insertion</code> is added to <code>stream</code>.
 If <code>after</code> is numeric, it designates the line (or element) number in <code>stream</code> after which the
 <code>insertion</code> will be placed. The numeric value of <code>after</code> must be in <code>[0:length(stream)]</code>.
 To make an insertion at the very beginning of <code>stream</code>, use <code>after = 0</code>.  If <code>after</code> is a
 character string, the insertion is placed after the first element in <code>stream</code> that contains the string,
-where matching is obtained using <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code>.</dd>
+where matching is obtained using <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>grep</a></code>.</dd>
   <dt>insertion</dt>
   <dd class="rd-dd">A character vector that will be inserted into the stream after element <code>after</code>.
-Each element in the vector could correspond to a separate line in the file.</dd>
+Each element in the vector would correspond to a separate line in the file.</dd>
   <dt>warn</dt>
   <dd class="rd-dd">If <code>TRUE</code>, warning messages are produced if insertion fails due to mispecifification
 of <code>after</code>.</dd>
   <dt>...</dt>
-  <dd class="rd-dd">Additional named arguments to <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code>, which are applicable if <code>after</code> is a character string.
-In other words, <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code> is used to search for the first instance of <code>after</code>.</dd>
+  <dd class="rd-dd">Additional named arguments to <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>grep</a></code>, which are applicable if <code>after</code> is a character string.
+In other words, <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>grep</a></code> is used to search for the first instance of <code>after</code>.</dd>
 </dl>
 
   <h4>Details</h4>
@@ -82,10 +81,8 @@ insertion point is allowed, which is why <code>length(insertion)</code> must be 
 
   <h4>Value</h4>
 
-  <p class="rd-p"><dl>
-The new <code>stream</code> with the insertions added. If the insertion fails because <code>after</code> is
-specified incorrectly, <code>stream</code> is returned unchanged.
-</dl></p>
+  <p class="rd-p">The new <code>stream</code> with the insertions added. If the insertion fails because <code>after</code> is
+specified incorrectly, <code>stream</code> is returned unchanged.</p>
 
 
 
@@ -136,7 +133,7 @@ Landon Sego
 <dl class="rd-dl">
   <dt>stream</dt>
   <dd class="rd-dd">A character vector, each element typically (but not necessarily) containing the text
-from a single line in a file, which can be generated via <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code>.</dd>
+from a single line in a file, which can be generated via <code><a href=http://www.rdocumentation.org/packages/base/topics/readLines>readLines</a></code>.</dd>
   <dt>at</dt>
   <dd class="rd-dd">A vector of integers or a character string that designates where <code>replacement</code>
 is placed in <code>stream</code>.  If <code>at</code> is numeric, it designates the lines (or elements) in <code>stream</code>
@@ -152,16 +149,14 @@ is deleted.</dd>
   <dd class="rd-dd">If <code>TRUE</code>, warning messages are produced if replacement fails due to mispecifification
 of <code>at</code>.</dd>
   <dt>...</dt>
-  <dd class="rd-dd">Additional named arguments to <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code>, which are applicable if <code>at</code> is a character string.
-In other words, <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code> is used to search for the instances of <code>at</code>.</dd>
+  <dd class="rd-dd">Additional named arguments to <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>grep</a></code>, which are applicable if <code>at</code> is a character string.
+In other words, <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>grep</a></code> is used to search for the instances of <code>at</code>.</dd>
 </dl>
 
   <h4>Value</h4>
 
-  <p class="rd-p"><dl>
-The new <code>stream</code> with the replacements. If the replacement fails because <code>after</code> is
-specified incorrectly, <code>stream</code> is returned unchanged.
-</dl></p>
+  <p class="rd-p">The new <code>stream</code> with the replacements. If the replacement fails because <code>after</code> is
+specified incorrectly, <code>stream</code> is returned unchanged.</p>
 
 
 
@@ -222,7 +217,7 @@ Landon Sego
 <dl class="rd-dl">
   <dt>stream</dt>
   <dd class="rd-dd">A character vector, each element typically (but not necessarily) containing the text
-from a single line in a file, which can be generated via <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code>.</dd>
+from a single line in a file, which can be generated via <code><a href=http://www.rdocumentation.org/packages/base/topics/readLines>readLines</a></code>.</dd>
   <dt>pattern</dt>
   <dd class="rd-dd">A character string containing the regular expression that will be used to identify
 which the elements (or lines) in <code>stream</code> that will be substituted using <code>sed_substitute</code>.</dd>
@@ -232,24 +227,22 @@ for the <code>pattern</code>.  Setting <code>replacement = ""</code> will remove
 to <code>pattern</code>.</dd>
   <dt>every</dt>
   <dd class="rd-dd">A logical indicating whether every instance of <code>pattern</code> in each line should be
-substituted with <code>replacement</code>, in which case <code><a href=http://www.inside-r.org/r-doc/base/grep>gsub</a></code> is used.
+substituted with <code>replacement</code>, in which case <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>gsub</a></code> is used.
 If <code>every = FALSE</code>, only the first instance of <code>pattern</code> in each line is substituted, in which case
-<code><a href=http://www.inside-r.org/r-doc/base/grep>sub</a></code> is used.</dd>
+<code><a href=http://www.rdocumentation.org/packages/base/topics/grep>sub</a></code> is used.</dd>
   <dt>warn</dt>
   <dd class="rd-dd">If <code>TRUE</code>, warning messages are produced if substitution fails due to mispecifification
 of <code>pattern</code>.</dd>
   <dt>...</dt>
-  <dd class="rd-dd">Additional named arguments to <code><a href=http://www.inside-r.org/r-doc/base/grep>grepl</a></code> and <code><a href=http://www.inside-r.org/r-doc/base/grep>gsub</a></code> or <code><a href=http://www.inside-r.org/r-doc/base/grep>sub</a></code>.  <code><a href=http://www.inside-r.org/r-doc/base/grep>grepl</a></code>
-is used to verify whether <code>pattern</code> is present in <code>stream</code>.  <code><a href=http://www.inside-r.org/r-doc/base/grep>gsub</a></code> or <code><a href=http://www.inside-r.org/r-doc/base/grep>sub</a></code> are used
+  <dd class="rd-dd">Additional named arguments to <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>grepl</a></code> and <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>gsub</a></code> or <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>sub</a></code>.  <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>grepl</a></code>
+is used to verify whether <code>pattern</code> is present in <code>stream</code>.  <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>gsub</a></code> or <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>sub</a></code> are used
 to perform the substitution, depending on the value of <code>every</code>.</dd>
 </dl>
 
   <h4>Value</h4>
 
-  <p class="rd-p"><dl>
-The new <code>stream</code> with the substitions. If the substitution fails because <code>pattern</code> is not found,
-<code>stream</code> is returned unchanged.
-</dl></p>
+  <p class="rd-p">The new <code>stream</code> with the substitions. If the substitution fails because <code>pattern</code> is not found,
+<code>stream</code> is returned unchanged.</p>
 
 
 
@@ -302,7 +295,7 @@ Landon Sego
 <dl class="rd-dl">
   <dt>stream</dt>
   <dd class="rd-dd">A character vector, each element typically (but not necessarily) containing the text
-from a single line in a file, which can be generated via <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code>.</dd>
+from a single line in a file, which can be generated via <code><a href=http://www.rdocumentation.org/packages/base/topics/readLines>readLines</a></code>.</dd>
   <dt>at</dt>
   <dd class="rd-dd">A vector of integers or a character string that designates the line(s) that will be commented.
 If <code>at</code> is numeric, it designates the line(s) (or elements) in <code>stream</code> that will be commented.
@@ -319,8 +312,8 @@ the beginning comment character and <code>type[2]</code> designates the ending c
   <dd class="rd-dd">If <code>TRUE</code>, warning messages are produced if commenting (or uncommenting) fails due to mispecifification
 of <code>at</code>.</dd>
   <dt>...</dt>
-  <dd class="rd-dd">Additional named arguments to <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code>, which are applicable if <code>at</code> is a character string.
-In other words, <code><a href=http://www.inside-r.org/r-doc/base/grep>grep</a></code> is used to search for the instances of <code>at</code>.</dd>
+  <dd class="rd-dd">Additional named arguments to <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>grep</a></code>, which are applicable if <code>at</code> is a character string.
+In other words, <code><a href=http://www.rdocumentation.org/packages/base/topics/grep>grep</a></code> is used to search for the instances of <code>at</code>.</dd>
 </dl>
 
   <h4>Details</h4>
@@ -334,10 +327,8 @@ are removed from the selected lines.</p>
 
   <h4>Value</h4>
 
-  <p class="rd-p"><dl>
-The new <code>stream</code> with the commented (or uncommented) lines. If the commenting fails because <code>at</code> is
-specified incorrectly, <code>stream</code> is returned unchanged.
-</dl></p>
+  <p class="rd-p">The new <code>stream</code> with the commented (or uncommented) lines. If the commenting fails because <code>at</code> is
+specified incorrectly, <code>stream</code> is returned unchanged.</p>
 
 
 
@@ -439,14 +430,14 @@ a list with names and values that correspond to the arguments of <code><a href=#
 <code><a href=#sed_substitute>sed_substitute</a></code>, and/or <code><a href=#sed_comment>sed_comment</a></code> respectively.  See Examples.</dd>
   <dt>stream</dt>
   <dd class="rd-dd">A character vector, each element typically (but not necessarily) containing the text
-from a single line in a file, which can be generated via <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code>.</dd>
+from a single line in a file, which can be generated via <code><a href=http://www.rdocumentation.org/packages/base/topics/readLines>readLines</a></code>.</dd>
   <dt>inFile</dt>
-  <dd class="rd-dd">A character string designating a file that is to be read (using <code><a href=http://www.inside-r.org/r-doc/base/readLines>readLines</a></code>
+  <dd class="rd-dd">A character string designating a file that is to be read (using <code><a href=http://www.rdocumentation.org/packages/base/topics/readLines>readLines</a></code>
 and will become a <code>stream</code>,
 where each line of the file is mapped to a single element in the character vector <code>stream</code>.</dd>
   <dt>outFile</dt>
   <dd class="rd-dd">A character string designating a file to which the resulting, edited stream will be
-written using <code><a href=http://www.inside-r.org/r-doc/base/writeLines>writeLines</a></code>. If <code>outFile = NULL</code>, no file is written.</dd>
+written using <code><a href=http://www.rdocumentation.org/packages/base/topics/writeLines>writeLines</a></code>. If <code>outFile = NULL</code>, no file is written.</dd>
   <dt>warn</dt>
   <dd class="rd-dd">A logical that, when <code>TRUE</code>, issues a worning if the insertion, replacement, subsitution, or
 commenting cannot be performed. See Details.</dd>
@@ -468,9 +459,7 @@ particular command, the locally supplied value of <code>warn</code> takes preced
 
   <h4>Value</h4>
 
-  <p class="rd-p"><dl>
-Invisibly returns the edited stream, and writes the stream to a file if <code>outFile</code> is supplied.
-</dl></p>
+  <p class="rd-p">Invisibly returns the edited stream, and writes the stream to a file if <code>outFile</code> is supplied.</p>
 
 
 
@@ -572,9 +561,7 @@ printstream(x, ...)</code></pre>
 
   <h4>Value</h4>
 
-  <p class="rd-p"><dl>
-The same character vector, only it now inherits from class "stream"
-</dl></p>
+  <p class="rd-p">The same character vector, only it now inherits from class "stream"</p>
 
 
   <h4>Methods (by generic)</h4>
