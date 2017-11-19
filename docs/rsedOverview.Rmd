@@ -17,7 +17,7 @@ You can install the package from [CRAN](https://cran.r-project.org/) or from [Gi
 ```{r instalCRAN, eval = FALSE, echo = TRUE}
 install.packages("rsed")
 ```
-S
+
 ### GitHub
 
 You can install from  [GitHub](https://github.com) using the [devtools](https://CRAN.R-project.org/package=devtools) package as follows:
