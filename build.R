@@ -41,6 +41,11 @@ rsed::streamEdit(list(# Links for LICENSE
                                replacement = paste("<a href=https://opensource.org/licenses/BSD-3-Clause>BSD_3_clause</a> +",
                                                    "<a href='LICENSE.txt'>LICENSE</a>"),
                                fixed = TRUE),
+          
+                      # Add links to imported CRAN packages
+                      s = list(pattern = "Smisc",
+                               replacement = "<a href=https://CRAN.R-project.org/package=Smisc>Smisc</a>",
+                               fixed = TRUE),
 
                       # Add links to suggested CRAN packages
                       s = list(pattern = "testthat",
