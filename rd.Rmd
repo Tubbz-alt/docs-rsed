@@ -16,10 +16,10 @@ brand: |-
   <img src='figures/icon.png' alt='PNNL icon' width='30px' height='30px' style='margin-top: -3px;'>
   </a>
 ---
-<h1>Stream Editing in R</h1>
+<h1>Stream Editing</h1>
 
 <p><strong>Authors:</strong> Landon Sego <LHS@byu.net> [aut, cre]</p>
-<p><strong>Version:</strong> 0.1.1</p>
+<p><strong>Version:</strong> 0.1.2</p>
 <p><strong>License:</strong> BSD_3_clause + file LICENSE</p>
 
 <h4>Description</h4>
