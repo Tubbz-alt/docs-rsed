@@ -10,7 +10,7 @@ You might ask, "doesn't this package duplicate functionality already available i
 
 ## Package installation
 
-You can install the package from [CRAN](https://cran.r-project.org/) or from [GitHub](https://github.com):
+You can install the package from [CRAN](https://CRAN.R-project.org/) or from [GitHub](https://github.com):
 
 ### CRAN
 
